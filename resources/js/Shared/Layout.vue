@@ -57,6 +57,15 @@
 							</li>
 
 							<li class="nav-item">
+								<Link class="nav-link" href="/branch">
+									<i class="nav-icon fas fa-code-branch"></i>									
+									<p>
+										Branch
+									</p>
+								</Link>
+							</li>
+
+							<li class="nav-item">
 								<Link class="nav-link" href="/order">
 									<i class="nav-icon fas fa-book"></i>									
 									<p>

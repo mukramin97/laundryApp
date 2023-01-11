@@ -23,7 +23,7 @@ class BranchSeeder extends Seeder
         for($i = 1; $i <= 10; $i++){
     		DB::table('branchs')->insert([
 
-                'branch_name' => $faker->name,
+                'branch_name' => $faker->company,
                 'phone_number' => $faker->phoneNumber,
                 'created_at' => $now,
                 'updated_at' => $now,

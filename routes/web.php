@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\OwnerController;
+use App\Http\Controllers\BranchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,3 +18,5 @@ use App\Http\Controllers\OwnerController;
 
 Route::get('/', [DashboardController::class, 'index']);
 Route::get('/about', [DashboardController::class, 'about']);
+
+Route::get('/branch', [BranchController::class, 'index']);
