@@ -17,12 +17,6 @@ class CreateBranchsTable extends Migration
             $table->id();
             $table->string('branch_name');
             $table->string('phone_number');
-            $table->unsignedBigInteger('owner_id');
-            $table->foreign('owner_id')
-                  ->references('id')
-                  ->on('owners')
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
             $table->timestamps();
         });
     }

@@ -17,10 +17,6 @@ class Branch extends Model
         'owner_id',
     ];
 
-    public function owner(){
-        return $this->belongsTo(Owner::class);
-    }
-
     //
 
     public function employee(){
