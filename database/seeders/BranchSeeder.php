@@ -21,12 +21,15 @@ class BranchSeeder extends Seeder
         $now = Carbon::now();
 
         for($i = 1; $i <= 10; $i++){
+
+            $dateTime = $faker->dateTimeThisMonth;
+            $dateOnly = $dateTime->format('Y-m-d');
+
     		DB::table('branchs')->insert([
 
                 'branch_name' => $faker->company,
                 'phone_number' => $faker->phoneNumber,
-                'created_at' => $now,
-                'updated_at' => $now,
+                'established' => $dateOnly,
 
     		]);
     	}

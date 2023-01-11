@@ -14,7 +14,7 @@ class Branch extends Model
     protected $fillable = [
         'branch_name',
         'phone_number',
-        'owner_id',
+        'established',
     ];
 
     //

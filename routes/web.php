@@ -19,4 +19,9 @@ use App\Http\Controllers\BranchController;
 Route::get('/', [DashboardController::class, 'index']);
 Route::get('/about', [DashboardController::class, 'about']);
 
-Route::get('/branch', [BranchController::class, 'index']);
+Route::get('/branch', [BranchController::class, 'index'])
+    ->name('branch.index');
+Route::get('branch/{id}/edit', [BranchController::class, 'edit'])
+    ->name('branch.edit');
+Route::put('branch/{id}', [BranchController::class, 'update'])
+    ->name('branch.update');

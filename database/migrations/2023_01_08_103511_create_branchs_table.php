@@ -17,6 +17,7 @@ class CreateBranchsTable extends Migration
             $table->id();
             $table->string('branch_name');
             $table->string('phone_number');
+            $table->date('established');
             $table->timestamps();
         });
     }
