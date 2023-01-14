@@ -1,16 +1,13 @@
 <template>
   <layout>
+    <Head title="Edit Branch" />
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Branch</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Dashboard v1</li>
-            </ol>
+            <h1>
+              <Link href="/branch" class="m-0">Branch</Link>
+            </h1>
           </div>
         </div>
       </div>
@@ -18,7 +15,7 @@
     <section class="content">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-6">
             <div class="card card-primary">
               <div class="card-header">
                 <h3 class="card-title">Edit Branch</h3>
@@ -33,7 +30,7 @@
                       v-model="form.branch_name"
                       type="text"
                       class="form-control"
-                      :class="{'is-invalid': branchNameError}"
+                      :class="{ 'is-invalid': branchNameError }"
                       placeholder="Branch Name"
                     />
                     <span v-if="errors.branch_name" class="text-danger">{{
@@ -47,7 +44,7 @@
                       v-model="form.phone_number"
                       type="text"
                       class="form-control"
-                      :class="{'is-invalid': phoneNumberError}"
+                      :class="{ 'is-invalid': phoneNumberError }"
                       placeholder="Phone Number"
                     />
                     <span v-if="errors.phone_number" class="text-danger">{{
@@ -68,9 +65,65 @@
                 </div>
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <div class="row">
+                    <div class="col-md-6"></div>
+                    <div class="col-md-6 text-right">
+                      <button type="submit" class="btn btn-primary">
+                        Submit
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </form>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Employee</h3>
+                <div class="row">
+                  <div class="col-md-10"></div>
+                  <div class="col-md-2">
+                    <div class="card-tools float-right">
+                      <div class="input-group input-group-sm">
+                        <Link
+                          as="button"
+                          :href="`/employee/create/`+ branch.id + '/' + branch.branch_name "
+                          class="btn btn-sm btn-success"
+                        >
+                          Create Employee
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body table-responsive">
+                <table class="table table-hover text-nowrap">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      v-for="employee in employees"
+                      :key="employee.id"
+                      v-on:click="gotoEdit(employee.id)"
+                      class="clickable-row"
+                    >
+                      <td>{{ employee.name }}dd</td>
+                      <td>{{ employee.email }}</td>
+                      <td class="text-right">
+                        <i class="nav-icon fas fa-arrow-right"></i>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
@@ -80,12 +133,13 @@
 </template>
 
 <script>
-import { Link } from "@inertiajs/inertia-vue3";
+import { Head, Link } from "@inertiajs/inertia-vue3";
 import Layout from "../../Shared/Layout.vue";
 
 export default {
   components: {
     Layout,
+    Head,
     Link,
   },
   data() {
@@ -103,10 +157,14 @@ export default {
   props: {
     errors: Object,
     branch: Object,
+    employees: Object,
   },
   methods: {
     update() {
       this.$inertia.put("/branch/" + this.branch.id, this.form);
+    },
+    gotoEdit(id) {
+      this.$inertia.get("/employee/" + id + "/edit");
     },
   },
   computed: {

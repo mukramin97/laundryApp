@@ -144,4 +144,14 @@ export default {
   background: #bbb;
   margin: 1rem 0;
 }
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.clickable-row:hover {
+  cursor: pointer;
+}
+
 </style>

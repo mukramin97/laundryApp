@@ -1,16 +1,13 @@
 <template>
   <layout>
+    <Head title="Branch" />
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Branch</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Dashboard v1</li>
-            </ol>
+            <h1>
+              <Link href="/branch" class="m-0">Branch</Link>
+            </h1>
           </div>
         </div>
       </div>
@@ -19,21 +16,22 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
-            <div class="card">
+            <div class="card card-primary">
               <div class="card-header">
                 <h3 class="card-title">Branch Data</h3>
-                <div class="card-tools">
-                  <div class="input-group input-group-sm" style="width: 150px">
-                    <input
-                      type="text"
-                      name="table_search"
-                      class="form-control float-right"
-                      placeholder="Search"
-                    />
-                    <div class="input-group-append">
-                      <button type="submit" class="btn btn-default">
-                        <i class="fas fa-search"></i>
-                      </button>
+                <div class="row">
+                  <div class="col-md-10"></div>
+                  <div class="col-md-2">
+                    <div class="card-tools float-right">
+                      <div class="input-group input-group-sm">
+                        <Link
+                          as="button"
+                          :href="`/branch/create`"
+                          class="btn btn-sm btn-success"
+                        >
+                          Create Branch
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -49,14 +47,23 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="branch in formattedBranchs" :key="branch.id">
-                      <td>{{ branch.branch_name }}</td>
-                      <td>{{ branch.phone_number }}</td>
-                      <td>{{ branch.established }}</td>
+                    <tr
+                      v-for="branch in formattedBranchs"
+                      :key="branch.id"
+                      v-on:click="gotoEdit(branch.id)"
+                      class="clickable-row"
+                    >
+                      <td>
+                        {{ branch.branch_name }}
+                      </td>
+                      <td>
+                        {{ branch.phone_number }}
+                      </td>
+                      <td>
+                        {{ branch.established }}
+                      </td>
                       <td class="text-right">
-                        <Link :href="`/branch/${branch.id}/edit`">
-                          <i class="nav-icon fas fa-arrow-right"></i>
-                        </Link>
+                        <i class="nav-icon fas fa-arrow-right"></i>
                       </td>
                     </tr>
                   </tbody>
@@ -71,15 +78,24 @@
 </template>
 
 <style>
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.clickable-row:hover {
+  cursor: pointer;
+}
 </style>
 
 <script>
-import { Link } from "@inertiajs/inertia-vue3";
+import { Head, Link } from "@inertiajs/inertia-vue3";
 import Layout from "../../Shared/Layout.vue";
 
 export default {
   components: {
     Layout,
+    Head,
     Link,
   },
   props: {
@@ -96,6 +112,11 @@ export default {
           ),
         };
       });
+    },
+  },
+  methods: {
+    gotoEdit(id) {
+      this.$inertia.get("/branch/" + id + "/edit");
     },
   },
 };

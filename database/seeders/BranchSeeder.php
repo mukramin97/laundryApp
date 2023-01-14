@@ -20,7 +20,7 @@ class BranchSeeder extends Seeder
         $faker = Faker::create('id_ID');
         $now = Carbon::now();
 
-        for($i = 1; $i <= 10; $i++){
+        for($i = 1; $i <= 5; $i++){
 
             $dateTime = $faker->dateTimeThisMonth;
             $dateOnly = $dateTime->format('Y-m-d');

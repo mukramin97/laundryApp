@@ -1,0 +1,152 @@
+<template>
+  <layout>
+    <Head title="Create Employee" />
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>
+              <Link href="" class="m-0">Employee</Link>
+            </h1>
+          </div>
+        </div>
+      </div>
+    </div>
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Create Employee</h3>
+              </div>
+
+              <form @submit.prevent="store">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="exampleName">Name</label>
+                    <input
+                      id="name"
+                      v-model="form.name"
+                      type="text"
+                      class="form-control"
+                      :class="{ 'is-invalid': nameError }"
+                      placeholder="Name"
+                    />
+                    <span v-if="errors.name" class="text-danger">{{
+                      errors.name
+                    }}</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleBranchID">Branch</label>
+                    <input
+                      id="branch_name"
+                      v-model="form.branch_name"
+                      class="form-control custom-select"
+                      :class="{ 'is-invalid': branch_idError }"
+                      readonly
+                    />
+                    <span v-if="errors.branch_id" class="text-danger">{{
+                      errors.branch_id
+                    }}</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleEmail">Email</label>
+                    <input
+                      id="email"
+                      v-model="form.email"
+                      type="email"
+                      class="form-control"
+                      :class="{ 'is-invalid': emailError }"
+                      placeholder="Email"
+                    />
+                    <span v-if="errors.email" class="text-danger">{{
+                      errors.email
+                    }}</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="examplePassword">Password</label>
+                    <input
+                      id="password"
+                      v-model="form.password"
+                      type="password"
+                      class="form-control"
+                      :class="{ 'is-invalid': passwordError }"
+                      placeholder="Password"
+                    />
+                    <span v-if="errors.password" class="text-danger">{{
+                      errors.password
+                    }}</span>
+                  </div>
+                </div>
+
+                <div class="card-footer">
+                  <div class="row">
+                    <div class="col-md-6"></div>
+                    <div class="col-md-6 text-right">
+                      <button type="submit" class="btn btn-primary">
+                        Submit
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </layout>
+</template>
+
+<script>
+import { Head, Link } from "@inertiajs/inertia-vue3";
+import Layout from "../../Shared/Layout.vue";
+
+export default {
+  components: {
+    Layout,
+    Head,
+    Link,
+  },
+  data() {
+    return {
+      form: {
+        name: null,
+        email: null,
+        password: null,
+        branch_id: null,
+        branch_name: null,
+      },
+    };
+  },
+  props: {
+    errors: Object,
+    branch_id: Number,
+    branch_name: String,
+  },
+  methods: {
+    store() {
+      this.$inertia.post("/employee/store", this.form);
+    },
+  },
+  computed: {
+    nameError() {
+      return !!this.errors.name;
+    },
+    emailError() {
+      return !!this.errors.email;
+    },
+    passwordError() {
+      return !!this.errors.password;
+    },
+    branch_idError() {
+      return !!this.errors.branch_id;
+    },
+  },
+  mounted() {
+    this.form.branch_id = this.branch_id;
+    this.form.branch_name = this.branch_name;
+  },
+};
+</script>
