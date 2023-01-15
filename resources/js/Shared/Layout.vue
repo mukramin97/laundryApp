@@ -57,13 +57,6 @@
               </li>
 
               <li class="nav-item">
-                <Link class="nav-link" href="/about">
-                  <i class="nav-icon fas fa-tachometer-alt"></i>
-                  <p>About</p>
-                </Link>
-              </li>
-
-              <li class="nav-item">
                 <Link class="nav-link" href="/branch">
                   <i class="nav-icon fas fa-code-branch"></i>
                   <p>Branch</p>
@@ -74,13 +67,6 @@
                 <Link class="nav-link" href="/order">
                   <i class="nav-icon fas fa-book"></i>
                   <p>Order</p>
-                </Link>
-              </li>
-
-              <li class="nav-item">
-                <Link class="nav-link" href="/employee">
-                  <i class="nav-icon fas fa-users"></i>
-                  <p>Employee</p>
                 </Link>
               </li>
 
@@ -153,5 +139,4 @@ a {
 .clickable-row:hover {
   cursor: pointer;
 }
-
 </style>
