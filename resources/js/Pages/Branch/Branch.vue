@@ -1,5 +1,6 @@
 <template>
   <layout>
+
     <Head title="Branch" />
     <div class="content-header">
       <div class="container-fluid">
@@ -24,12 +25,8 @@
                   <div class="col-md-2">
                     <div class="card-tools float-right">
                       <div class="input-group input-group-sm">
-                        <Link
-                          as="button"
-                          :href="`/branch/create`"
-                          class="btn btn-sm btn-success"
-                        >
-                          Create Branch
+                        <Link as="button" :href="`/branch/create`" class="btn btn-sm btn-success">
+                        Create Branch
                         </Link>
                       </div>
                     </div>
@@ -47,12 +44,8 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr
-                      v-for="branch in formattedBranchs"
-                      :key="branch.id"
-                      v-on:click="gotoEdit(branch.id)"
-                      class="clickable-row"
-                    >
+                    <tr v-for="branch in formattedBranchs" :key="branch.id" v-on:click="gotoEdit(branch.id)"
+                      class="clickable-row">
                       <td>
                         {{ branch.branch_name }}
                       </td>

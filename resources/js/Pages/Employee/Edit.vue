@@ -1,5 +1,6 @@
 <template>
   <layout>
+
     <Head title="Create Employee" />
     <div class="content-header">
       <div class="container-fluid">
@@ -25,30 +26,16 @@
                 <div class="card-body">
                   <div class="form-group">
                     <label for="exampleName">Name</label>
-                    <input
-                      id="name"
-                      v-model="form.name"
-                      type="text"
-                      class="form-control"
-                      :class="{ 'is-invalid': nameError }"
-                      placeholder="Name"
-                    />
+                    <input id="name" v-model="form.name" type="text" class="form-control"
+                      :class="{ 'is-invalid': nameError }" placeholder="Name" />
                     <span v-if="errors.name" class="text-danger">{{
                       errors.name
                     }}</span>
                   </div>
                   <div class="form-group">
                     <label for="exampleBranchID">Branch</label>
-                    <select
-                      id="branch_id"
-                      class="form-control custom-select"
-                      v-model="form.branch_id"
-                    >
-                      <option
-                        v-for="branch in branchs"
-                        :key="branch.id"
-                        :value="branch.id"
-                      >
+                    <select id="branch_id" class="form-control custom-select" v-model="form.branch_id">
+                      <option v-for="branch in branchs" :key="branch.id" :value="branch.id">
                         {{ branch.branch_name }}
                       </option>
                     </select>
@@ -58,28 +45,16 @@
                   </div>
                   <div class="form-group">
                     <label for="exampleEmail">Email</label>
-                    <input
-                      id="email"
-                      v-model="form.email"
-                      type="email"
-                      class="form-control"
-                      :class="{ 'is-invalid': emailError }"
-                      placeholder="Email"
-                    />
+                    <input id="email" v-model="form.email" type="email" class="form-control"
+                      :class="{ 'is-invalid': emailError }" placeholder="Email" />
                     <span v-if="errors.email" class="text-danger">{{
                       errors.email
                     }}</span>
                   </div>
                   <div class="form-group">
                     <label for="examplePassword">Password</label>
-                    <input
-                      id="password"
-                      v-model="form.password"
-                      type="password"
-                      class="form-control"
-                      :class="{ 'is-invalid': passwordError }"
-                      placeholder="Password"
-                    />
+                    <input id="password" v-model="form.password" type="password" class="form-control"
+                      :class="{ 'is-invalid': passwordError }" placeholder="Password" />
                     <span v-if="errors.password" class="text-danger">{{
                       errors.password
                     }}</span>
@@ -105,9 +80,10 @@
   </layout>
 </template>
   
-  <script>
+<script>
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import Layout from "../../Shared/Layout.vue";
+import { Swal } from 'vue-sweetalert2';
 
 export default {
   components: {
@@ -132,7 +108,21 @@ export default {
   },
   methods: {
     update() {
-      this.$inertia.put("/employee/" + this.employee.id, this.form);
+      this.$inertia.put("/employee/" + this.employee.id, this.form)
+        .then(() => {
+          console.log("yiha");
+          // success code here
+          Swal.fire({
+            title: 'Success!',
+            text: 'Employee data updated successfully!',
+            icon: 'success',
+            timer: 3000
+          });
+        })
+        .catch((error) => {
+          // error code here
+          console.log(error);
+        });
     },
   },
   computed: {
@@ -148,9 +138,6 @@ export default {
     branch_idError() {
       return !!this.errors.branch_id;
     },
-  },
-  mounted() {
-   
   },
 };
 </script>

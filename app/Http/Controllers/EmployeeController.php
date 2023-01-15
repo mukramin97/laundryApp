@@ -12,6 +12,8 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Carbon\Carbon;
+Use Alert;
+
 
 class EmployeeController extends Controller
 {
@@ -67,7 +69,7 @@ class EmployeeController extends Controller
         $validated = $request->validate([
             'name' => 'required|max:100|min:3',
             'email' => 'required',
-            'password' => 'required',
+            'password' => 'min:8|max:50|',
             'branch_id' => 'required',
         ]);
 
