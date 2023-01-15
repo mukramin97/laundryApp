@@ -21,7 +21,7 @@
                 <h3 class="card-title">Create Employee</h3>
               </div>
 
-              <form @submit.prevent="store">
+              <form @submit.prevent="update">
                 <div class="card-body">
                   <div class="form-group">
                     <label for="exampleName">Name</label>
@@ -39,14 +39,6 @@
                   </div>
                   <div class="form-group">
                     <label for="exampleBranchID">Branch</label>
-                    <!-- <input
-                      id="branch_name"
-                      v-model="form.branch_name"
-                      class="form-control custom-select"
-                      :class="{ 'is-invalid': branch_idError }"
-                      readonly
-                    /> -->
-
                     <select
                       id="branch_id"
                       class="form-control custom-select"
@@ -60,7 +52,6 @@
                         {{ branch.branch_name }}
                       </option>
                     </select>
-
                     <span v-if="errors.branch_id" class="text-danger">{{
                       errors.branch_id
                     }}</span>
@@ -113,8 +104,8 @@
     </section>
   </layout>
 </template>
-
-<script>
+  
+  <script>
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import Layout from "../../Shared/Layout.vue";
 
@@ -127,23 +118,21 @@ export default {
   data() {
     return {
       form: {
-        name: null,
-        email: null,
-        password: null,
-        branch_id: null,
-        //branch_name: null,
+        name: this.employee.name,
+        email: this.employee.email,
+        password: this.employee.password,
+        branch_id: this.employee.branch_id,
       },
     };
   },
   props: {
+    employee: Object,
     errors: Object,
     branchs: Array,
-    branch_id: Number,
-    branch_name: String,
   },
   methods: {
-    store() {
-      this.$inertia.post("/employee/store", this.form);
+    update() {
+      this.$inertia.put("/employee/" + this.employee.id, this.form);
     },
   },
   computed: {
@@ -161,8 +150,7 @@ export default {
     },
   },
   mounted() {
-    this.form.branch_id = this.branch_id;
-    //this.form.branch_name = this.branch_name;
+   
   },
 };
 </script>

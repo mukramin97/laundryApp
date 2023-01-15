@@ -18,10 +18,12 @@ class EmployeeController extends Controller
     public function create($branch_id_s, $branch_name)
     {
         $branch_id = intval($branch_id_s);
+        $branchs = Branch::all();
 
         return Inertia::render('Employee/Create', [
             'branch_id' => $branch_id,
             'branch_name' => $branch_name,
+            'branchs' => $branchs,
         ]);
     }
 
@@ -47,5 +49,36 @@ class EmployeeController extends Controller
         ]);
 
         return Redirect::route('branch.index')->with('success', 'Employee data added successfully!');
+    }
+
+    public function edit($id){
+
+        $employee = Employee::find($id);
+        $branchs = Branch::all();
+
+        return Inertia::render('Employee/Edit', [
+            'branchs' => $branchs,
+            'employee' => $employee,
+        ]);
+    }
+
+    public function update(Request $request, $id){
+
+        $validated = $request->validate([
+            'name' => 'required|max:100|min:3',
+            'email' => 'required',
+            'password' => 'required',
+            'branch_id' => 'required',
+        ]);
+
+        $employee = Employee::find($id);
+
+        $employee->name = $request->name;
+        $employee->email = $request->email;
+        $employee->password = bcrypt($request->password);
+        $employee->branch_id = $request->branch_id;
+        $employee->save();
+
+        return Redirect::route('branch.index')->with('success', 'Employee data updated successfully!');
     }
 }

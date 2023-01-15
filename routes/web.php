@@ -35,3 +35,7 @@ Route::get('employee/create/{branch_id}/{branch_name}', [EmployeeController::cla
     ->name('employee.create');
 Route::post('employee/store', [EmployeeController::class, 'store'])
     ->name('employee.store');
+Route::get('employee/{id}/edit', [EmployeeController::class, 'edit'])
+    ->name('employee.edit');
+Route::put('employee/{id}', [EmployeeController::class, 'update'])
+    ->name('employee.update');
