@@ -90,7 +90,12 @@
                       <div class="input-group input-group-sm">
                         <Link
                           as="button"
-                          :href="`/employee/create/`+ branch.id + '/' + branch.branch_name "
+                          :href="
+                            `/employee/create/` +
+                            branch.id +
+                            '/' +
+                            branch.branch_name
+                          "
                           class="btn btn-sm btn-success"
                         >
                           Create Employee
@@ -115,7 +120,7 @@
                       v-on:click="gotoEdit(employee.id)"
                       class="clickable-row"
                     >
-                      <td>{{ employee.name }}dd</td>
+                      <td>{{ employee.name }}</td>
                       <td>{{ employee.email }}</td>
                       <td class="text-right">
                         <i class="nav-icon fas fa-arrow-right"></i>
@@ -158,6 +163,7 @@ export default {
     errors: Object,
     branch: Object,
     employees: Object,
+    flash: Object,
   },
   methods: {
     update() {
@@ -174,6 +180,11 @@ export default {
     phoneNumberError() {
       return !!this.errors.phone_number;
     },
+  },
+  created() {
+    if (this.flash && this.flash.success) {
+      this.swalMixin('success', this.flash.success)
+    }
   },
 };
 </script>

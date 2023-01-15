@@ -44,7 +44,7 @@ class BranchController extends Controller
             'established' => $dateOnly,
         ]);
 
-        return Redirect::route('branch.index')->with('success', 'Branch data added successfully!');
+        return Redirect::route('branch.index')->with('success', $request->branch_name.' Branch created successfully!');
     }
 
     public function edit($id)
@@ -71,6 +71,6 @@ class BranchController extends Controller
         $branch->phone_number = $request->phone_number;
         $branch->save();
         
-        return Redirect::route('branch.index')->with('success', 'Branch data updated successfully!');
+        return Redirect::route('branch.index')->with('success', $request->branch_name.' Branch updated successfully!');
     }
 }

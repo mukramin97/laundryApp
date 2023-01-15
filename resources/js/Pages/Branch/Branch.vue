@@ -93,6 +93,7 @@ export default {
   },
   props: {
     branchs: Array,
+    flash: Object,
   },
   computed: {
     formattedBranchs() {
@@ -112,5 +113,11 @@ export default {
       this.$inertia.get("/branch/" + id + "/edit");
     },
   },
+  created() {
+    if (this.flash && this.flash.success) {
+      this.swalMixin('success', this.flash.success)
+    }
+  },
+
 };
 </script>

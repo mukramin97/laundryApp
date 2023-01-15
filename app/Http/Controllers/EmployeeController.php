@@ -50,7 +50,9 @@ class EmployeeController extends Controller
             
         ]);
 
-        return Redirect::route('branch.index')->with('success', 'Employee data added successfully!');
+        $strbranch_id = strval($request->branch_id);
+
+        return Redirect::route('branch.edit', $strbranch_id)->with('success', $request->name.' data created successfully!');
     }
 
     public function edit($id){
@@ -81,6 +83,8 @@ class EmployeeController extends Controller
         $employee->branch_id = $request->branch_id;
         $employee->save();
 
-        return Redirect::route('branch.index')->with('success', 'Employee data updated successfully!');
+        $strbranch_id = strval($request->branch_id);
+
+        return Redirect::route('branch.edit', $strbranch_id)->with('success', $request->name.' data updated successfully!');
     }
 }
