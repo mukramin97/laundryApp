@@ -31,8 +31,17 @@ class BranchController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'branch_name' => 'required|max:100|min:3',
-            'phone_number' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+            'branch_name' => [
+                'required',
+                'max:100',
+                'min:3',
+                'unique:branchs,branch_name'
+            ],
+            'phone_number' => [
+                'required',
+                'regex:/^([0-9\s\-\+\(\)]*)$/',
+                'min:10'
+            ],
         ]);
 
         $currentDateTime = Carbon::now();
@@ -44,7 +53,7 @@ class BranchController extends Controller
             'established' => $dateOnly,
         ]);
 
-        return Redirect::route('branch.index')->with('success', $request->branch_name.' Branch created successfully!');
+        return Redirect::route('branch.index')->with('success', $request->branch_name . ' Branch created successfully!');
     }
 
     public function edit($id)
@@ -60,17 +69,26 @@ class BranchController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'branch_name' => 'required|max:100|min:3',
-            'phone_number' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
-        ]);
-
         $branch = Branch::find($id);
+
+        $validated = $request->validate([
+            'branch_name' => [
+                'required',
+                'max:100',
+                'min:3',
+                Rule::unique('branchs')->ignore($branch)
+            ],
+            'phone_number' => [
+                'required',
+                'regex:/^([0-9\s\-\+\(\)]*)$/',
+                'min:10'
+            ],
+        ]);
 
         $branch->branch_name = $request->branch_name;
         $branch->phone_number = $request->phone_number;
         $branch->save();
-        
-        return Redirect::route('branch.index')->with('success', $request->branch_name.' Branch updated successfully!');
+
+        return Redirect::route('branch.index')->with('success', $request->branch_name . ' Branch updated successfully!');
     }
 }

@@ -12,7 +12,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Carbon\Carbon;
-Use Alert;
+use Alert;
 
 
 class EmployeeController extends Controller
@@ -32,10 +32,23 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|max:100|min:3',
-            'email' => 'required',
-            'password' => 'required',
-            'branch_id' => 'required',
+            'name' => [
+                'required',
+                'max:100',
+                'min:3'
+            ],
+            'email' => [
+                'required',
+                'unique:employees,email'
+            ],
+            'password' => [
+                'required',
+                'min:8',
+                'max:50'
+            ],
+            'branch_id' => [
+                'required'
+            ],
         ]);
 
         $currentDateTime = Carbon::now();
@@ -47,15 +60,16 @@ class EmployeeController extends Controller
             'password' => bcrypt($request->password),
             'remember_token' => Str::random(60),
             'branch_id' => $request->branch_id,
-            
+
         ]);
 
         $strbranch_id = strval($request->branch_id);
 
-        return Redirect::route('branch.edit', $strbranch_id)->with('success', $request->name.' data created successfully!');
+        return Redirect::route('branch.edit', $strbranch_id)->with('success', $request->name . ' data created successfully!');
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
 
         $employee = Employee::find($id);
         $branchs = Branch::all();
@@ -66,16 +80,28 @@ class EmployeeController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
+        $employee = Employee::find($id);
 
         $validated = $request->validate([
-            'name' => 'required|max:100|min:3',
-            'email' => 'required',
-            'password' => 'min:8|max:50|',
-            'branch_id' => 'required',
+            'name' => [
+                'required',
+                'max:100',
+                'min:3'
+            ],
+            'email' => [
+                'required',
+                Rule::unique('employees')->ignore($employee)
+            ],
+            'password' => [
+                'min:8',
+                'max:50'
+            ],
+            'branch_id' => [
+                'required'
+            ],
         ]);
-
-        $employee = Employee::find($id);
 
         $employee->name = $request->name;
         $employee->email = $request->email;
@@ -85,6 +111,6 @@ class EmployeeController extends Controller
 
         $strbranch_id = strval($request->branch_id);
 
-        return Redirect::route('branch.edit', $strbranch_id)->with('success', $request->name.' data updated successfully!');
+        return Redirect::route('branch.edit', $strbranch_id)->with('success', $request->name . ' data updated successfully!');
     }
 }
