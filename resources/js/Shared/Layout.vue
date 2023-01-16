@@ -50,28 +50,28 @@
               <!-- Add icons to the links using the .nav-icon class
 									with font-awesome or any other icon font library -->
               <li class="nav-item">
-                <Link class="nav-link" href="/">
+                <Link class="nav-link" href="/" :class="{ 'active': $page.url === '/' }">
                   <i class="nav-icon fas fa-tachometer-alt"></i>
                   <p>Dashboard</p>
                 </Link>
               </li>
 
               <li class="nav-item">
-                <Link class="nav-link" href="/branch">
+                <Link class="nav-link" href="/branch" :class="{ 'active': $page.url === '/branch' }">
                   <i class="nav-icon fas fa-code-branch"></i>
                   <p>Branch</p>
                 </Link>
               </li>
 
               <li class="nav-item">
-                <Link class="nav-link" href="/order">
+                <Link class="nav-link" href="/order" :class="{ 'active': $page.url === '/order' }">
                   <i class="nav-icon fas fa-book"></i>
                   <p>Order</p>
                 </Link>
               </li>
 
               <li class="nav-item">
-                <Link class="nav-link" href="/category">
+                <Link class="nav-link" href="/category" :class="{ 'active': $page.url === '/category' }">
                   <i class="nav-icon fas fa-tag"></i>
                   <p>Category</p>
                 </Link>
