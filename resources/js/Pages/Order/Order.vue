@@ -63,7 +63,7 @@
                         {{ order.user.name }}
                       </td>
                       <td>
-                        {{ order.date_placed }}
+                        {{ formatDate(order.date_placed) }}
                       </td>
                       <td>
                         {{ formatDate(order.date_completed) }}
@@ -82,7 +82,13 @@
             </div>
           </div>
         </div>
+        <!-- Pagination -->
+
+        <Pagination :links="orders.links" />
       </div>
+
+
+
     </section>
   </layout>
 </template>
@@ -101,12 +107,14 @@ a {
 <script>
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import Layout from "../../Shared/Layout.vue";
+import Pagination from "../../Shared/Pagination.vue";
 
 export default {
   components: {
     Layout,
     Head,
     Link,
+    Pagination
   },
   props: {
     orders: Object,
@@ -118,7 +126,7 @@ export default {
     },
     formatDate(date) {
       if (date == null) {
-        return "Null"
+        return ""
       }
       else {
         return moment(date).format('DD/MM HH:mm')

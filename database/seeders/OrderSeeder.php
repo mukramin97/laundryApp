@@ -22,17 +22,24 @@ class OrderSeeder extends Seeder
 
             $dateThisMonth = $faker->dateTimeThisMonth();
             $dateThisMonth_ = Carbon::parse($dateThisMonth)->addDay();
+            $dateCompleted = $faker->randomElement([$dateThisMonth_, null]);
+            if($dateCompleted){
+                $status = 'Selesai';
+            }
+            else if($dateCompleted == null){
+                $status = $faker->randomElement(['Proses','Menunggu']);
+            };
 
     		DB::table('orders')->insert([
                 'name' => $faker->name,
                 'item' => $faker->randomElement(['Pakaian', 'Sprei', 'Jas']),
                 'weight' => $faker->randomFloat(2, 2, 10),
-                'status' => $faker->randomElement(['Proses','Menunggu', 'Selesai']),
+                'status' => $status,
                 'branch_id' => $faker->numberBetween(1, 5),
                 'category_id' => $faker->numberBetween(1, 3),
                 'user_id' => $faker->numberBetween(1, 20),
                 'date_placed' => $dateThisMonth,
-                'date_completed' => $faker->randomElement([$dateThisMonth_, null]),
+                'date_completed' => $dateCompleted,
     		]);
     	}
 

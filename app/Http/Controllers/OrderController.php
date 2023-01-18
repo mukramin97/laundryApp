@@ -15,7 +15,7 @@ class OrderController extends Controller
     public function index()
     {
         return Inertia::render('Order/Order', [
-            'orders' => Order::paginate(10)->through(fn($order)=>[
+            'orders' => Order::paginate(15)->through(fn($order)=>[
                 'id' => $order->id,
                 'name' => $order->name,
                 'weight' => $order->weight,
