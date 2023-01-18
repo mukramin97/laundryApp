@@ -91,7 +91,7 @@
                         <Link
                           as="button"
                           :href="
-                            `/employee/create/` +
+                            `/user/create/` +
                             branch.id +
                             '/' +
                             branch.branch_name
@@ -115,13 +115,13 @@
                   </thead>
                   <tbody>
                     <tr
-                      v-for="employee in employees"
-                      :key="employee.id"
-                      v-on:click="gotoEdit(employee.id)"
+                      v-for="user in users"
+                      :key="user.id"
+                      v-on:click="gotoEdit(user.id)"
                       class="clickable-row"
                     >
-                      <td>{{ employee.name }}</td>
-                      <td>{{ employee.email }}</td>
+                      <td>{{ user.name }}</td>
+                      <td>{{ user.email }}</td>
                       <td class="text-right">
                         <i class="nav-icon fas fa-arrow-right"></i>
                       </td>
@@ -162,7 +162,7 @@ export default {
   props: {
     errors: Object,
     branch: Object,
-    employees: Object,
+    users: Object,
     flash: Object,
   },
   methods: {
@@ -170,7 +170,7 @@ export default {
       this.$inertia.put("/branch/" + this.branch.id, this.form);
     },
     gotoEdit(id) {
-      this.$inertia.get("/employee/" + id + "/edit");
+      this.$inertia.get("/user/" + id + "/edit");
     },
   },
   computed: {
@@ -184,6 +184,9 @@ export default {
   created() {
     if (this.flash && this.flash.success) {
       this.swalMixin('success', this.flash.success)
+    }
+    if (this.flash && this.flash.error) {
+      this.swalMixin('error', this.flash.error)
     }
   },
 };

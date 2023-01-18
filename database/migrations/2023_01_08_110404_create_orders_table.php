@@ -21,7 +21,7 @@ class CreateOrdersTable extends Migration
             $table->string('status');
             $table->unsignedBigInteger('branch_id');
             $table->unsignedBigInteger('category_id');
-            $table->unsignedBigInteger('employee_id');
+            $table->unsignedBigInteger('user_id');
             $table->dateTime('date_placed');
             $table->dateTime('date_completed')->nullable();
             $table->foreign('branch_id')
@@ -34,9 +34,9 @@ class CreateOrdersTable extends Migration
                   ->on('categories')
                   ->onDelete('cascade')
                   ->onUpdate('cascade');
-            $table->foreign('employee_id')
+            $table->foreign('user_id')
                   ->references('id')
-                  ->on('employees')
+                  ->on('users')
                   ->onDelete('cascade')
                   ->onUpdate('cascade');
             $table->timestamps();

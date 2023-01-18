@@ -19,8 +19,8 @@ class Branch extends Model
 
     //
 
-    public function employee(){
-        return $this->hasMany(Employee::class);
+    public function user(){
+        return $this->hasMany(User::class);
     }
 
     public function order(){

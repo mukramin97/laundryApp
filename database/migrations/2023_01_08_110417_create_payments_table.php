@@ -19,15 +19,15 @@ class CreatePaymentsTable extends Migration
             $table->string('amount');
             $table->dateTime('date_payment');
             $table->unsignedBigInteger('order_id');
-            $table->unsignedBigInteger('employee_id');
+            $table->unsignedBigInteger('user_id');
             $table->foreign('order_id')
                   ->references('id')
                   ->on('orders')
                   ->onDelete('cascade')
                   ->onUpdate('cascade');
-            $table->foreign('employee_id')
+            $table->foreign('user_id')
                   ->references('id')
-                  ->on('employees')
+                  ->on('users')
                   ->onDelete('cascade')
                   ->onUpdate('cascade');
             $table->timestamps();

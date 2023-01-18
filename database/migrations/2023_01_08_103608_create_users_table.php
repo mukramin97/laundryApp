@@ -19,7 +19,14 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->boolean('is_superadmin')->default(false);
             $table->rememberToken();
+            $table->unsignedBigInteger('branch_id');
+            $table->foreign('branch_id')
+                  ->references('id')
+                  ->on('branchs')
+                  ->onDelete('cascade')
+                  ->onUpdate('cascade');
             $table->timestamps();
         });
     }

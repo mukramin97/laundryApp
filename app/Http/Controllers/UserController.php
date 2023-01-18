@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Employee;
+use App\Models\User;
 use App\Models\Branch;
 
 use Illuminate\Http\Request;
@@ -12,17 +12,16 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Carbon\Carbon;
-use Alert;
 
 
-class EmployeeController extends Controller
+class UserController extends Controller
 {
     public function create($branch_id_s, $branch_name)
     {
         $branch_id = intval($branch_id_s);
         $branchs = Branch::all();
 
-        return Inertia::render('Employee/Create', [
+        return Inertia::render('User/Create', [
             'branch_id' => $branch_id,
             'branch_name' => $branch_name,
             'branchs' => $branchs,
@@ -39,7 +38,7 @@ class EmployeeController extends Controller
             ],
             'email' => [
                 'required',
-                'unique:employees,email'
+                'unique:users,email'
             ],
             'password' => [
                 'required',
@@ -54,7 +53,7 @@ class EmployeeController extends Controller
         $currentDateTime = Carbon::now();
         $dateOnly = $currentDateTime->format('Y-m-d');
 
-        Employee::create([
+        User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
@@ -71,18 +70,18 @@ class EmployeeController extends Controller
     public function edit($id)
     {
 
-        $employee = Employee::find($id);
+        $user = User::find($id);
         $branchs = Branch::all();
 
-        return Inertia::render('Employee/Edit', [
+        return Inertia::render('User/Edit', [
             'branchs' => $branchs,
-            'employee' => $employee,
+            'user' => $user,
         ]);
     }
 
     public function update(Request $request, $id)
     {
-        $employee = Employee::find($id);
+        $user = User::find($id);
 
         $validated = $request->validate([
             'name' => [
@@ -92,7 +91,7 @@ class EmployeeController extends Controller
             ],
             'email' => [
                 'required',
-                Rule::unique('employees')->ignore($employee)
+                Rule::unique('users')->ignore($user)
             ],
             'password' => [
                 'min:8',
@@ -103,11 +102,11 @@ class EmployeeController extends Controller
             ],
         ]);
 
-        $employee->name = $request->name;
-        $employee->email = $request->email;
-        $employee->password = bcrypt($request->password);
-        $employee->branch_id = $request->branch_id;
-        $employee->save();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        $user->branch_id = $request->branch_id;
+        $user->save();
 
         $strbranch_id = strval($request->branch_id);
 

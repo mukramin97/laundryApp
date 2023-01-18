@@ -18,7 +18,7 @@ class Order extends Model
         'status',
         'branch_id',
         'category_id',
-        'employee_id',
+        'user_id',
         'date_placed',
         'date_completed',
     ];
@@ -31,8 +31,8 @@ class Order extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function employee(){
-        return $this->belongsTo(Employee::class);
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 
     //

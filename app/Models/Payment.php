@@ -16,14 +16,14 @@ class Payment extends Model
         'amount',
         'date_payment',
         'order_id',
-        'employee_id',
+        'user_id',
     ];
 
     public function order(){
         return $this->belongsTo(Order::class);
     }
 
-    public function employee(){
-        return $this->belongsTo(Employee::class);
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 }

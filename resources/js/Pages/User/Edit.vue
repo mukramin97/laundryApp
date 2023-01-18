@@ -118,22 +118,22 @@ export default {
   data() {
     return {
       form: {
-        name: this.employee.name,
-        email: this.employee.email,
-        password: this.employee.password,
-        branch_id: this.employee.branch_id,
+        name: this.user.name,
+        email: this.user.email,
+        password: this.user.password,
+        branch_id: this.user.branch_id,
       },
     };
   },
   props: {
-    employee: Object,
+    user: Object,
     errors: Object,
     branchs: Array,
     flash: Object,
   },
   methods: {
     update() {
-      this.$inertia.put("/employee/" + this.employee.id, this.form);
+      this.$inertia.put("/user/" + this.user.id, this.form);
     },
     showAlert() {
       this.$swal("Hello Vue world!!!");
@@ -152,11 +152,6 @@ export default {
     branch_idError() {
       return !!this.errors.branch_id;
     },
-  },
-  created() {
-    if(this.flash && this.flash.success) {
-      console.log('asdasd');
-    }
   },
 };
 </script>

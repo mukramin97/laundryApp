@@ -143,7 +143,7 @@ export default {
   },
   methods: {
     store() {
-      this.$inertia.post("/employee/store", this.form);
+      this.$inertia.post("/user/store", this.form);
     },
   },
   computed: {

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Faker\Factory as Faker;
 
-class EmployeeSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -18,15 +18,23 @@ class EmployeeSeeder extends Seeder
     {
         $faker = Faker::create('id_ID');
 
+        DB::table('users')->insert([
+            'name' => 'Admin',
+            'email' => 'admin@admin.com',
+            'password' => bcrypt('Admin.123'),
+            'remember_token' => Str::random(60),
+            'branch_id' => 1,
+            'is_superadmin' => true,
+        ]);
+
         for($i = 1; $i <= 20; $i++){
 
-    		DB::table('employees')->insert([
+    		DB::table('users')->insert([
                 'name' => $faker->name,
                 'email' => $faker->email,
                 'password' => bcrypt('Admin.123'),
                 'remember_token' => Str::random(60),
                 'branch_id' => $faker->randomElement([1, 2, 3, 4, 5]),
-
     		]);
     	}
     }

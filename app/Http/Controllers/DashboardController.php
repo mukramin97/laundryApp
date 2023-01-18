@@ -12,8 +12,4 @@ class DashboardController extends Controller
     {
         return Inertia::render('Dashboard/Home');
     }
-    public function about()
-    {
-        return Inertia::render('Dashboard/About');
-    }
 }

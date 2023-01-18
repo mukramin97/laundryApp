@@ -1,4 +1,5 @@
 <template>
+
   <body class="hold-transition sidebar-mini">
     <div class="wrapper">
       <!-- Navbar -->
@@ -6,9 +7,7 @@
         <!-- Left navbar links -->
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" data-widget="pushmenu" href="#"
-              ><i class="fas fa-bars"></i
-            ></a>
+            <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
           </li>
         </ul>
       </nav>
@@ -18,11 +17,8 @@
       <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="#" class="brand-link">
-          <img
-            src="../../../public/AdminLTE/dist/img/AdminLTELogo.png"
-            alt="Laundry App"
-            class="brand-image img-circle elevation-3"
-          />
+          <img src="../../../public/AdminLTE/dist/img/AdminLTELogo.png" alt="Laundry App"
+            class="brand-image img-circle elevation-3" />
           <span class="brand-text font-weight-light">Laundry App</span>
         </a>
 
@@ -30,57 +26,52 @@
         <div class="sidebar">
           <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-              <img
-                alt="Avatar"
-                class="table-avatar img-circle"
-                src="../../../public/AdminLTE/dist/img/avatar5.png"
-              />
+              <img alt="Avatar" class="table-avatar img-circle" src="../../../public/AdminLTE/dist/img/avatar5.png" />
             </div>
-            <div class="info"></div>
+            <div class="info">
+              <div class="info">
+                <a href="#" class="d-block">Hi, {{ auths.user.name }}</a>
+              </div>
+            </div>
           </div>
 
           <!-- Sidebar Menu -->
           <nav class="mt-2">
-            <ul
-              class="nav nav-pills nav-sidebar flex-column"
-              data-widget="treeview"
-              role="menu"
-              data-accordion="false"
-            >
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
               <!-- Add icons to the links using the .nav-icon class
 									with font-awesome or any other icon font library -->
               <li class="nav-item">
                 <Link class="nav-link" href="/" :class="{ 'active': $page.url === '/' }">
-                  <i class="nav-icon fas fa-tachometer-alt"></i>
-                  <p>Dashboard</p>
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>Dashboard</p>
                 </Link>
               </li>
 
               <li class="nav-item">
                 <Link class="nav-link" href="/branch" :class="{ 'active': $page.url === '/branch' }">
-                  <i class="nav-icon fas fa-code-branch"></i>
-                  <p>Branch</p>
+                <i class="nav-icon fas fa-code-branch"></i>
+                <p>Branch</p>
                 </Link>
               </li>
 
               <li class="nav-item">
                 <Link class="nav-link" href="/order" :class="{ 'active': $page.url === '/order' }">
-                  <i class="nav-icon fas fa-book"></i>
-                  <p>Order</p>
+                <i class="nav-icon fas fa-book"></i>
+                <p>Order</p>
                 </Link>
               </li>
 
               <li class="nav-item">
                 <Link class="nav-link" href="/category" :class="{ 'active': $page.url === '/category' }">
-                  <i class="nav-icon fas fa-tag"></i>
-                  <p>Category</p>
+                <i class="nav-icon fas fa-tag"></i>
+                <p>Category</p>
                 </Link>
               </li>
 
               <li class="nav-item">
                 <Link class="nav-link" href="/logout">
-                  <i class="nav-icon fas fa-sign-out-alt"></i>
-                  <p>Logout</p>
+                <i class="nav-icon fas fa-sign-out-alt"></i>
+                <p>Logout</p>
                 </Link>
               </li>
             </ul>
@@ -103,10 +94,8 @@
           Made with <i class="fa fa-heart" style="color: red"></i> by Mukramin
         </div>
         <!-- Default to the left -->
-        <strong
-          >Copyright &copy; 2014-2019
-          <a href="https://adminlte.io">AdminLTE.io</a>.</strong
-        >
+        <strong>Copyright &copy; 2014-2019
+          <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
         All rights reserved.
       </footer>
     </div>
@@ -116,9 +105,18 @@
 <script>
 import { Link } from "@inertiajs/inertia-vue3";
 
+
 export default {
   components: {
     Link,
+  },
+  props: {
+    auth: Object,
+  },
+  data() {
+    return {
+      auths: this.$page.props.auth,
+    };
   },
 };
 </script>

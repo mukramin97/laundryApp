@@ -62,7 +62,7 @@ class BranchController extends Controller
 
         return Inertia::render('Branch/Edit', [
             'branch' => $branch,
-            'employees' => $branch->employee()->orderBy('name')->get()->map->only('id', 'name', 'email'),
+            'users' => $branch->user()->orderBy('name')->get()->map->only('id', 'name', 'email'),
         ]);
 
     }

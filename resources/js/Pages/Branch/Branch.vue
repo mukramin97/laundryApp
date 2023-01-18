@@ -117,6 +117,9 @@ export default {
     if (this.flash && this.flash.success) {
       this.swalMixin('success', this.flash.success)
     }
+    if (this.flash && this.flash.error) {
+      this.swalMixin('error', this.flash.error)
+    }
   },
 
 };
