@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\AuthUserController;
 
 
@@ -59,3 +60,6 @@ Route::get('category/{id}/edit', [CategoryController::class, 'edit'])
     ->name('category.edit')->middleware('is_superadmin');
 Route::put('category/{id}', [CategoryController::class, 'update'])
     ->name('category.update')->middleware('is_superadmin');
+
+Route::get('order', [OrderController::class, 'index'])
+    ->name('order.index')->middleware('auth');

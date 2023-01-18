@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             BranchSeeder::class,
             UserSeeder::class,
             CategorySeeder::class,
+            OrderSeeder::class,
             
         ]);
 

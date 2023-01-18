@@ -17,7 +17,7 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('item');
-            $table->decimal('weight', 2, 2);
+            $table->decimal('weight', 5, 2);
             $table->string('status');
             $table->unsignedBigInteger('branch_id');
             $table->unsignedBigInteger('category_id');
