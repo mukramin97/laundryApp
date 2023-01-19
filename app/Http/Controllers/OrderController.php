@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Category;
+use App\Models\Payment;
+
+
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -83,12 +86,14 @@ class OrderController extends Controller
     {
         $getCost = floatval($request->getCost);
         $order = Order::find($id);
+        $payment = Payment::where('order_id', $order->id)->first();
         $categories = Category::all();
 
         return Inertia::render('Order/Edit', [
             'order' => $order,
             'categories' => $categories,
             'getCost' => $getCost,
+            'payment' => $payment,
         ]);
     }
 

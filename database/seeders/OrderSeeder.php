@@ -23,6 +23,8 @@ class OrderSeeder extends Seeder
             $dateThisMonth = $faker->dateTimeThisMonth();
             $dateThisMonth_ = Carbon::parse($dateThisMonth)->addDay();
             $dateCompleted = $faker->randomElement([$dateThisMonth_, null]);
+            $user_id = $faker->numberBetween(1, 20);
+
             if($dateCompleted){
                 $status = 'Selesai';
             }
@@ -30,17 +32,27 @@ class OrderSeeder extends Seeder
                 $status = $faker->randomElement(['Proses','Menunggu']);
             };
 
-    		DB::table('orders')->insert([
+    		$order_id = DB::table('orders')->insertGetId([
                 'name' => $faker->name,
                 'item' => $faker->randomElement(['Pakaian', 'Sprei', 'Jas']),
                 'weight' => $faker->randomFloat(1, 2, 10),
                 'status' => $status,
                 'branch_id' => $faker->numberBetween(1, 5),
                 'category_id' => $faker->numberBetween(1, 3),
-                'user_id' => $faker->numberBetween(1, 20),
+                'user_id' => $user_id,
                 'date_placed' => $dateThisMonth,
                 'date_completed' => $dateCompleted,
     		]);
+
+            if($dateCompleted){
+                DB::table('payments')->insert([
+                    'cost' => $faker->randomNumber(5, true),
+                    'amount_paid' => $faker->randomNumber(5, true),
+                    'date_payment' => $dateCompleted,
+                    'user_id' => $user_id,
+                    'order_id' => $order_id,
+                ]);
+            }
     	}
 
     }

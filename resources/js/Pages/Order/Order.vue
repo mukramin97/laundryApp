@@ -86,15 +86,11 @@
                 </table>
               </div>
             </div>
+            <!-- Pagination -->
+            <Pagination :links="orders.links" />
           </div>
         </div>
-        <!-- Pagination -->
-
-        <Pagination :links="orders.links" />
       </div>
-
-
-
     </section>
   </layout>
 </template>
@@ -128,7 +124,7 @@ export default {
   },
   methods: {
     gotoEdit(id, getCost) {
-      this.$inertia.get("/order/" + id + "/edit/", {getCost});
+      this.$inertia.get("/order/" + id + "/edit/", { getCost });
     },
     formatDate(date) {
       if (date == null) {

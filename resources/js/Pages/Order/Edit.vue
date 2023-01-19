@@ -57,23 +57,31 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-6">
-                                            <div class="form-group">
-                                                <label for="exampleCost">Cost</label>
+                                            <label for="exampleCost">Cost</label>
+                                            <div class="form-group input-group">
                                                 <input id="cost" :value="formatCost(form.cost)" type="float"
                                                     class="form-control" placeholder="Cost" disabled />
+                                                <div class="input-group-append">
+                                                    <button type="button" class="btn btn-secondary input-group-text"
+                                                        @click="copyValue">
+                                                        <i class="fas fa-copy"></i>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <label for="exampleAmountPaid">Amount Paid</label>
-
                                             <div class="form-group input-group">
                                                 <div class="input-group-prepend">
-                                                    <span class="input-group-text">Rp. </span>
+                                                    <span class="input-group-text">Rp.</span>
                                                 </div>
                                                 <input id="amount_paid" v-model="form.amount_paid" type="number"
                                                     class="form-control" placeholder="Amount Paid" />
                                                 <div class="input-group-append">
-                                                    <span class="input-group-text">.00</span>
+                                                    <button type="button" class="btn btn-secondary input-group-text"
+                                                        @click="pasteValue">
+                                                        <i class="fas fa-paste"></i>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -86,7 +94,7 @@
                                         <div class="col-md-6"></div>
                                         <div class="col-md-6 text-right">
                                             <button type="submit" class="btn btn-primary">
-                                                Submit
+                                                Update
                                             </button>
                                         </div>
                                     </div>
@@ -128,6 +136,7 @@ export default {
         order: Object,
         categories: Array,
         getCost: Number,
+        payment: Object,
     },
     methods: {
         update() {
@@ -138,6 +147,22 @@ export default {
                 style: 'currency',
                 currency: 'IDR'
             })
+        },
+        async copyValue() {
+            try {
+                navigator.clipboard.writeText(this.form.cost);
+                console.log('Value copied to clipboard');
+            } catch (err) {
+                console.error('Failed to copy value: ', err);
+            }
+        },
+        async pasteValue() {
+            try {
+                const value = await navigator.clipboard.readText();
+                this.form.amount_paid = value;
+            } catch (err) {
+                console.error('Failed to paste value: ', err);
+            }
         }
     },
     computed: {

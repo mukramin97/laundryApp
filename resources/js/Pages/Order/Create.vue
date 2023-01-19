@@ -48,7 +48,7 @@
                   </div>
                   <div class="form-group">
                     <label for="exampleWeight">Weight</label>
-                    <input id="weight" v-model="form.weight" type="number" class="form-control"
+                    <input id="weight" v-model="form.weight" type="text" class="form-control"
                       :class="{ 'is-invalid': weightError }" placeholder="Weight" />
                       
                     <span v-if="errors.weight" class="text-danger">
