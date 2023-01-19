@@ -41,7 +41,7 @@ class CategorySeeder extends Seeder
 
         DB::table('categories')->insert([
 
-            'category_name' => 'Express 12',
+            'category_name' => 'Express 6',
             'description' => 'Mencuci hingga kering, setrika, dan selesai dalam waktu 6 jam',
             'price' => 8000,
 

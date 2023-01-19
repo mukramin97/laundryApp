@@ -33,7 +33,7 @@ class OrderSeeder extends Seeder
     		DB::table('orders')->insert([
                 'name' => $faker->name,
                 'item' => $faker->randomElement(['Pakaian', 'Sprei', 'Jas']),
-                'weight' => $faker->randomFloat(2, 2, 10),
+                'weight' => $faker->randomFloat(1, 2, 10),
                 'status' => $status,
                 'branch_id' => $faker->numberBetween(1, 5),
                 'category_id' => $faker->numberBetween(1, 3),

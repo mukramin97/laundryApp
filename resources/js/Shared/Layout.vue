@@ -48,21 +48,21 @@
               </li>
 
               <li class="nav-item">
-                <Link class="nav-link" href="/branch" :class="{ 'active': $page.url === '/branch' }">
+                <Link class="nav-link" href="/branch" :class="{ 'active': $page.url.startsWith('/branch') }">
                 <i class="nav-icon fas fa-code-branch"></i>
                 <p>Branch</p>
                 </Link>
               </li>
 
               <li class="nav-item">
-                <Link class="nav-link" href="/order" :class="{ 'active': $page.url === '/order' }">
+                <Link class="nav-link" href="/order" :class="{ 'active': $page.url.startsWith('/order') }">
                 <i class="nav-icon fas fa-book"></i>
                 <p>Order</p>
                 </Link>
               </li>
 
               <li class="nav-item">
-                <Link class="nav-link" href="/category" :class="{ 'active': $page.url === '/category' }">
+                <Link class="nav-link" href="/category" :class="{ 'active': $page.url.startsWith('/category') }">
                 <i class="nav-icon fas fa-tag"></i>
                 <p>Category</p>
                 </Link>

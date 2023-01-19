@@ -15,8 +15,9 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->string('method');
-            $table->string('amount');
+            $table->string('method')->default('Tunai');
+            $table->decimal('cost');
+            $table->decimal('amount_paid');
             $table->dateTime('date_payment');
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('user_id');

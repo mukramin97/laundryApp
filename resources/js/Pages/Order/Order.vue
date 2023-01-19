@@ -41,14 +41,15 @@
                       <th>Customer Name</th>
                       <th>Category</th>
                       <th>Weight</th>
-                      <th>Employee</th>
+                      <th>Total Cost</th>
                       <th>Placed</th>
                       <th>Completed</th>
                       <th>Status</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="order in orders.data" :key="order.id" v-on:click="gotoEdit(order.id)"
+                    <tr v-for="order in orders.data" :key="order.id"
+                      v-on:click="gotoEdit(order.id, getCost(order.weight, order.category.price))"
                       class="clickable-row">
                       <td>
                         {{ order.name }}
@@ -57,10 +58,15 @@
                         {{ order.category.category_name }}
                       </td>
                       <td>
-                        {{ order.weight }}
+                        {{ order.weight }} Kg
                       </td>
                       <td>
-                        {{ order.user.name }}
+                        {{
+                          getCost(order.weight, order.category.price).toLocaleString('id-ID', {
+                            style: 'currency',
+                            currency: 'IDR'
+                          })
+                        }}
                       </td>
                       <td>
                         {{ formatDate(order.date_placed) }}
@@ -121,8 +127,8 @@ export default {
     flash: Object,
   },
   methods: {
-    gotoEdit(id) {
-      this.$inertia.get("/order/" + id + "/edit");
+    gotoEdit(id, getCost) {
+      this.$inertia.get("/order/" + id + "/edit/", {getCost});
     },
     formatDate(date) {
       if (date == null) {
@@ -131,7 +137,10 @@ export default {
       else {
         return moment(date).format('DD/MM HH:mm')
       }
-    }
+    },
+    getCost(weight, price) {
+      return weight * price
+    },
   },
   created() {
     if (this.flash && this.flash.success) {

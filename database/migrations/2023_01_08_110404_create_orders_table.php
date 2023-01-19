@@ -16,7 +16,7 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('item');
+            $table->string('item')->default('Pakaian');
             $table->decimal('weight', 5, 2);
             $table->string('status');
             $table->unsignedBigInteger('branch_id');

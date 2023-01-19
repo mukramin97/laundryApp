@@ -17,7 +17,7 @@ class CreateCategoriesTable extends Migration
             $table->id();
             $table->string('category_name');
             $table->string('description');
-            $table->decimal('price', 10, 2);
+            $table->decimal('price', 10, 1);
             $table->timestamps();
         });
     }

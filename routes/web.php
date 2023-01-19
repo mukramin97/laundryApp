@@ -63,3 +63,11 @@ Route::put('category/{id}', [CategoryController::class, 'update'])
 
 Route::get('order', [OrderController::class, 'index'])
     ->name('order.index')->middleware('auth');
+Route::get('order/create', [OrderController::class, 'create'])
+    ->name('order.create')->middleware('auth');
+Route::post('order/store', [OrderController::class, 'store'])
+    ->name('order.store')->middleware('auth');
+Route::get('order/{id}/edit', [OrderController::class, 'edit'])
+    ->name('order.edit')->middleware('auth');
+Route::put('order/{id}', [OrderController::class, 'update'])
+    ->name('order.update')->middleware('auth');
