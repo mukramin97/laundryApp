@@ -85,15 +85,53 @@ class OrderController extends Controller
     public function edit($id, Request $request)
     {
         $getCost = floatval($request->getCost);
-        $order = Order::find($id);
-        $payment = Payment::where('order_id', $order->id)->first();
+        $order = Order::with('user')->where('id', $id)->first();
         $categories = Category::all();
 
+        $paymentData = Payment::where('order_id', $order->id)->first();
+        if ($paymentData === null) {
+            $paymentData = null;
+        } else {
+            $paymentData = [
+                'id' => $paymentData->id,
+                'method' => $paymentData->method,
+                'cost' => $paymentData->cost,
+                'amount_paid' => $paymentData->amount_paid,
+                'date_payment' => $paymentData->date_payment,
+                'user' => $paymentData->user
+            ];
+        }
+
+        Payment::where('order_id', $order->id)->get()->map(function ($payment) {
+            return [
+            'id' => $payment->id,
+            'method' => $payment->method,
+            'cost' => $payment->cost,
+            'amount_paid' => $payment->amount_paid,
+            'date_payment' => $payment->date_payment,
+            'user' => $payment->user
+            ];
+            });
+
         return Inertia::render('Order/Edit', [
+            
+            // 'order' => Order::where('id', $id)->first(), //Return Data Only
+            // 'order' => Order::where('id', $id)->get()->map(function ($order){
+            //     return [
+            //         'id' => $order->id,
+            //         'name' => $order->name,
+            //         'weight' => $order->weight,
+            //         'status' => $order->status,
+            //         'branch' => $order->branch,
+            //         'category' => $order->category,
+            //         'user' => $order->user,
+            //     ];
+            // }), This one return with parent but with array model
+
             'order' => $order,
             'categories' => $categories,
             'getCost' => $getCost,
-            'payment' => $payment,
+            'payment' => $paymentData,
         ]);
     }
 
@@ -101,6 +139,10 @@ class OrderController extends Controller
     {
         $user = Auth::user();
         $order = Order::find($id);
+
+        if ($order->status == "Selesai") {
+            return redirect()->back()->with('error', 'Order completed, order data cannot be changed!');
+        }
 
         $validated = $request->validate([
             'name' => [
@@ -120,6 +162,7 @@ class OrderController extends Controller
 
         $order->name = $request->name;
         $order->category_id = $request->category_id;
+        $order->user_id = $user->id;
         $order->weight = $request->weight;
         $order->save();
 

@@ -137,4 +137,9 @@ a {
 .clickable-row:hover {
   cursor: pointer;
 }
+
+.small-alert {
+  font-size: 16px;
+  padding: 7px;
+}
 </style>
