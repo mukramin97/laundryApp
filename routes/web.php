@@ -71,3 +71,5 @@ Route::get('order/{id}/edit', [OrderController::class, 'edit'])
     ->name('order.edit')->middleware('auth');
 Route::put('order/{id}', [OrderController::class, 'update'])
     ->name('order.update')->middleware('auth');
+Route::put('updatepayment/{id}', [OrderController::class, 'updatepayment'])
+    ->name('order.updatepayment')->middleware('auth');

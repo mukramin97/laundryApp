@@ -18,7 +18,7 @@ class OrderSeeder extends Seeder
     {
         $faker = Faker::create('id_ID');
 
-        for($i = 1; $i <= 100; $i++){
+        for($i = 1; $i <= 300; $i++){
 
             $dateThisMonth = $faker->dateTimeThisMonth();
             $dateThisMonth_ = Carbon::parse($dateThisMonth)->addDay();
@@ -33,7 +33,7 @@ class OrderSeeder extends Seeder
             };
 
     		$order_id = DB::table('orders')->insertGetId([
-                'name' => $faker->name,
+                'name' => $faker->firstName(),
                 'item' => $faker->randomElement(['Pakaian', 'Sprei', 'Jas']),
                 'weight' => $faker->randomFloat(1, 2, 10),
                 'status' => $status,

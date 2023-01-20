@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
-use PDO;
 
 class OrderController extends Controller
 {
@@ -82,10 +81,9 @@ class OrderController extends Controller
         return Redirect::route('order.index')->with('success', $request->name . ' order created successfully!');
     }
 
-    public function edit($id, Request $request)
+    public function edit($id)
     {
-        $getCost = floatval($request->getCost);
-        $order = Order::with('user')->where('id', $id)->first();
+        $order = Order::with('user')->with('category')->where('id', $id)->first();
         $categories = Category::all();
 
         $paymentData = Payment::where('order_id', $order->id)->first();
@@ -102,35 +100,9 @@ class OrderController extends Controller
             ];
         }
 
-        Payment::where('order_id', $order->id)->get()->map(function ($payment) {
-            return [
-            'id' => $payment->id,
-            'method' => $payment->method,
-            'cost' => $payment->cost,
-            'amount_paid' => $payment->amount_paid,
-            'date_payment' => $payment->date_payment,
-            'user' => $payment->user
-            ];
-            });
-
         return Inertia::render('Order/Edit', [
-            
-            // 'order' => Order::where('id', $id)->first(), //Return Data Only
-            // 'order' => Order::where('id', $id)->get()->map(function ($order){
-            //     return [
-            //         'id' => $order->id,
-            //         'name' => $order->name,
-            //         'weight' => $order->weight,
-            //         'status' => $order->status,
-            //         'branch' => $order->branch,
-            //         'category' => $order->category,
-            //         'user' => $order->user,
-            //     ];
-            // }), This one return with parent but with array model
-
             'order' => $order,
             'categories' => $categories,
-            'getCost' => $getCost,
             'payment' => $paymentData,
         ]);
     }
@@ -160,12 +132,45 @@ class OrderController extends Controller
 
         $now = Carbon::now();
 
-        $order->name = $request->name;
-        $order->category_id = $request->category_id;
-        $order->user_id = $user->id;
-        $order->weight = $request->weight;
-        $order->save();
+        if ($request->amount_paid) {
+            Payment::create([
+                'cost' => $request->cost,
+                'amount_paid' => $request->amount_paid,
+                'date_payment' => $now,
+                'order_id' => $order->id,
+                'user_id' => $user->id,
+            ]);
 
-        return Redirect::route('order.index')->with('success', $request->name . ' order updated successfully!');
+            $order->status = 'Selesai';
+            $order->date_completed = $now;
+            $order->save();
+
+            return Redirect::route('order.index')->with('success', $request->name . ' order payment successfully!');
+        } else if ($user->id === $order->user_id) {
+            $order->name = $request->name;
+            $order->category_id = $request->category_id;
+            $order->user_id = $user->id;
+            $order->weight = $request->weight;
+            $order->save();
+
+            return Redirect::route('order.index')->with('success', $request->name . ' order updated successfully!');
+        } else {
+            return redirect()->back()->with('error', 'Order cannot be changed exclude by person who handled it!');
+        }
+    }
+    public function updatepayment($id, Request $request)
+    {
+        $payment = Payment::find($id);
+
+        $validated = $request->validate([
+            'amount_paid' => [
+                'required',
+            ]
+        ]);
+
+        $payment->amount_paid = $request->amount_paid;
+        $payment->save();
+
+        return redirect()->back()->with('success', 'Payment updated successfully!');
     }
 }

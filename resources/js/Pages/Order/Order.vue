@@ -124,7 +124,7 @@ export default {
   },
   methods: {
     gotoEdit(id, getCost) {
-      this.$inertia.get("/order/" + id + "/edit/", { getCost });
+      this.$inertia.get("/order/" + id + "/edit");
     },
     formatDate(date) {
       if (date == null) {

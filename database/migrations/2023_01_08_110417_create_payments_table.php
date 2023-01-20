@@ -12,7 +12,7 @@ class CreatePaymentsTable extends Migration
      * @return void
      */
     public function up()
-    {
+    {       
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->string('method')->default('Tunai');

@@ -30,7 +30,7 @@ class UserSeeder extends Seeder
         for($i = 1; $i <= 20; $i++){
 
     		DB::table('users')->insert([
-                'name' => $faker->name,
+                'name' => $faker->firstName,
                 'email' => $faker->email,
                 'password' => bcrypt('Admin.123'),
                 'remember_token' => Str::random(60),
