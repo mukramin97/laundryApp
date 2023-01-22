@@ -12,7 +12,7 @@ class CreatePaymentsTable extends Migration
      * @return void
      */
     public function up()
-    {       
+    {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->string('method')->default('Tunai');
@@ -22,15 +22,16 @@ class CreatePaymentsTable extends Migration
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('user_id');
             $table->foreign('order_id')
-                  ->references('id')
-                  ->on('orders')
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
+                ->references('id')
+                ->on('orders')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
             $table->foreign('user_id')
-                  ->references('id')
-                  ->on('users')
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -17,6 +17,7 @@ class CreateMembersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('phone_number');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

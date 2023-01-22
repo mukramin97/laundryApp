@@ -112,4 +112,13 @@ class UserController extends Controller
 
         return Redirect::route('branch.edit', $strbranch_id)->with('success', $request->name . ' data updated successfully!');
     }
+
+    public function destroy($id)
+    {
+
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return Redirect::route('branch.edit', $user->branch_id)->with('success', $user->name . ' deleted successfully!');
+    }
 }

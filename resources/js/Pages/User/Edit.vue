@@ -1,5 +1,6 @@
 <template>
   <layout>
+
     <Head title="Create Employee" />
     <div class="content-header">
       <div class="container-fluid">
@@ -25,30 +26,16 @@
                 <div class="card-body">
                   <div class="form-group">
                     <label for="exampleName">Name</label>
-                    <input
-                      id="name"
-                      v-model="form.name"
-                      type="text"
-                      class="form-control"
-                      :class="{ 'is-invalid': nameError }"
-                      placeholder="Name"
-                    />
+                    <input id="name" v-model="form.name" type="text" class="form-control"
+                      :class="{ 'is-invalid': nameError }" placeholder="Name" />
                     <span v-if="errors.name" class="text-danger">{{
                       errors.name
                     }}</span>
                   </div>
                   <div class="form-group">
                     <label for="exampleBranchID">Branch</label>
-                    <select
-                      id="branch_id"
-                      class="form-control custom-select"
-                      v-model="form.branch_id"
-                    >
-                      <option
-                        v-for="branch in branchs"
-                        :key="branch.id"
-                        :value="branch.id"
-                      >
+                    <select id="branch_id" class="form-control custom-select" v-model="form.branch_id">
+                      <option v-for="branch in branchs" :key="branch.id" :value="branch.id">
                         {{ branch.branch_name }}
                       </option>
                     </select>
@@ -58,28 +45,16 @@
                   </div>
                   <div class="form-group">
                     <label for="exampleEmail">Email</label>
-                    <input
-                      id="email"
-                      v-model="form.email"
-                      type="email"
-                      class="form-control"
-                      :class="{ 'is-invalid': emailError }"
-                      placeholder="Email"
-                    />
+                    <input id="email" v-model="form.email" type="email" class="form-control"
+                      :class="{ 'is-invalid': emailError }" placeholder="Email" />
                     <span v-if="errors.email" class="text-danger">{{
                       errors.email
                     }}</span>
                   </div>
                   <div class="form-group">
                     <label for="examplePassword">Password</label>
-                    <input
-                      id="password"
-                      v-model="form.password"
-                      type="password"
-                      class="form-control"
-                      :class="{ 'is-invalid': passwordError }"
-                      placeholder="Password"
-                    />
+                    <input id="password" v-model="form.password" type="password" class="form-control"
+                      :class="{ 'is-invalid': passwordError }" placeholder="Password" />
                     <span v-if="errors.password" class="text-danger">{{
                       errors.password
                     }}</span>
@@ -88,7 +63,11 @@
 
                 <div class="card-footer">
                   <div class="row">
-                    <div class="col-md-6"></div>
+                    <div class="col-md-6">
+                      <button type="button" class="btn text-red" @click="deleteUser">
+                        Delete Employee
+                      </button>
+                    </div>
                     <div class="col-md-6 text-right">
                       <button type="submit" class="btn btn-primary">
                         Submit
@@ -138,6 +117,9 @@ export default {
     showAlert() {
       this.$swal("Hello Vue world!!!");
     },
+    deleteUser() {
+      this.swalConfirm(() => this.$inertia.delete("/user/" + this.user.id));
+    }
   },
   computed: {
     nameError() {

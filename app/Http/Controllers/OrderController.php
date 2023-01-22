@@ -21,7 +21,7 @@ class OrderController extends Controller
         $user = Auth::user();
 
         return Inertia::render('Order/Order', [
-            'orders' => Order::where('branch_id', $user->id)
+            'orders' => Order::where('branch_id', $user->branch_id)
                 ->orderByRaw("IFNULL(date_completed, '9999-12-31') DESC")
                 ->orderBy('date_placed', 'asc')
                 ->paginate(15)
@@ -83,10 +83,15 @@ class OrderController extends Controller
 
     public function edit($id)
     {
-        $order = Order::with('user')->with('category')->where('id', $id)->first();
+        $order = Order::with(['user' => function ($query) {
+            $query->withTrashed();
+        }])->with('category')->where('id', $id)->first();
         $categories = Category::all();
 
-        $paymentData = Payment::where('order_id', $order->id)->first();
+        $paymentData = Payment::where('order_id', $order->id)->with(['user' => function ($query) {
+            $query->withTrashed();
+        }])->first();
+
         if ($paymentData === null) {
             $paymentData = null;
         } else {
@@ -146,7 +151,7 @@ class OrderController extends Controller
             $order->save();
 
             return Redirect::route('order.index')->with('success', $request->name . ' order payment successfully!');
-        } else if ($user->id === $order->user_id) {
+        } else if ($user->id === $order->user_id or $user->is_superadmin == true ) {
             $order->name = $request->name;
             $order->category_id = $request->category_id;
             $order->user_id = $user->id;
@@ -158,6 +163,7 @@ class OrderController extends Controller
             return redirect()->back()->with('error', 'Order cannot be changed exclude by person who handled it!');
         }
     }
+
     public function updatepayment($id, Request $request)
     {
         $payment = Payment::find($id);
@@ -172,5 +178,28 @@ class OrderController extends Controller
         $payment->save();
 
         return redirect()->back()->with('success', 'Payment updated successfully!');
+    }
+
+    public function destroy($id)
+    {
+        $user = Auth::user();
+
+        $order = Order::findOrFail($id);
+        $order->delete();
+
+        return Redirect::route('order.index')->with('success', $order->name . ' order deleted successfully!');
+    }
+
+    public function destroypayment($id)
+    {
+        $user = Auth::user();
+
+        $payment = Payment::findOrFail($id);
+        $payment->delete();
+
+        //I need to set order status to proses
+
+        return redirect()->back()->with('success', 'Payment order deleted successfully!');
+
     }
 }

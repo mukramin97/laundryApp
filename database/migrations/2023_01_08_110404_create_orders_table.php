@@ -25,20 +25,22 @@ class CreateOrdersTable extends Migration
             $table->dateTime('date_placed');
             $table->dateTime('date_completed')->nullable();
             $table->foreign('branch_id')
-                  ->references('id')
-                  ->on('branchs')
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
+                ->references('id')
+                ->on('branchs')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
             $table->foreign('category_id')
-                  ->references('id')
-                  ->on('categories')
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
+                ->references('id')
+                ->on('categories')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
             $table->foreign('user_id')
-                  ->references('id')
-                  ->on('users')
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table->softDeletes();
+
             $table->timestamps();
         });
     }

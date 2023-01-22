@@ -23,10 +23,11 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->unsignedBigInteger('branch_id');
             $table->foreign('branch_id')
-                  ->references('id')
-                  ->on('branchs')
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
+                ->references('id')
+                ->on('branchs')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -27,6 +27,9 @@
                                     <div class="alert alert-danger" role="alert" v-if="alertError">
                                         {{ flash.error }}
                                     </div>
+                                    <div class="alert alert-success" role="alert" v-if="alertSuccess">
+                                        {{ flash.success }}
+                                    </div>
                                     <div class="form-group">
                                         <label for="exampleName">Customer Name</label>
                                         <input id="name" v-model="form.name" type="text" class="form-control"
@@ -124,7 +127,9 @@
                                 <div class="card-footer">
                                     <div class="row">
                                         <div class="col-md-6">
-
+                                            <button type="button" class="btn text-red" @click="deleteOrder">
+                                                Delete Order
+                                            </button>
                                         </div>
                                         <div class="col-md-6 text-right">
                                             <button type="submit" class="btn btn-primary">
@@ -187,9 +192,9 @@
                                                         <span class="input-group-text">Rp.</span>
                                                     </div>
                                                     <input id="amount_paid" v-model="form2.amount_paid" type="number"
-                                                        class="form-control" placeholder="Amount Paid" :class="{ 'is-invalid': amountPaidError }"
-                                                        :disabled="checkAuth"
-                                                         />
+                                                        class="form-control" placeholder="Amount Paid"
+                                                        :class="{ 'is-invalid': amountPaidError }"
+                                                        :disabled="checkAuth" />
                                                     <div class="input-group-append">
                                                         <button type="button" class="btn btn-secondary input-group-text"
                                                             @click="pasteValuePayment">
@@ -207,7 +212,11 @@
 
                                 <div class="card-footer">
                                     <div class="row">
-                                        <div class="col-md-6"></div>
+                                        <div class="col-md-6">
+                                            <button type="button" class="btn text-red" @click="deletePayment">
+                                                Delete Payment
+                                            </button>
+                                        </div>
                                         <div class="col-md-6 text-right">
                                             <button type="submit" class="btn btn-primary">
                                                 Update
@@ -312,7 +321,13 @@ export default {
             } catch (err) {
                 console.error('Failed to paste value: ', err);
             }
-        }
+        },
+        deleteOrder() {
+            this.swalConfirm(() => this.$inertia.delete("/order/" + this.order.id));
+        },
+        deletePayment() {
+            this.swalConfirm(() => this.$inertia.delete("/deletepayment/" + this.payment.id));
+        },
     },
     computed: {
         nameError() {
@@ -329,6 +344,9 @@ export default {
         },
         alertError() {
             return !!this.flash.error;
+        },
+        alertSuccess() {
+            return !!this.flash.success;
         },
         updateSuccess() {
             return !!this.flash.success;

@@ -64,7 +64,6 @@ class BranchController extends Controller
             'branch' => $branch,
             'users' => $branch->user()->orderBy('name')->get()->map->only('id', 'name', 'email'),
         ]);
-
     }
 
     public function update(Request $request, $id)
@@ -90,5 +89,13 @@ class BranchController extends Controller
         $branch->save();
 
         return Redirect::route('branch.index')->with('success', $request->branch_name . ' Branch updated successfully!');
+    }
+
+    public function destroy($id)
+    {
+        $branch = Branch::findOrFail($id);
+        $branch->delete();
+
+        return Redirect::route('branch.index')->with('success', $branch->branch_name . ' deleted successfully!');
     }
 }
