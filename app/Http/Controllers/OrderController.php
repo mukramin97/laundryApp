@@ -22,8 +22,8 @@ class OrderController extends Controller
 
         return Inertia::render('Order/Order', [
             'orders' => Order::where('branch_id', $user->branch_id)
-                ->orderByRaw("IFNULL(date_completed, '9999-12-31') DESC")
-                ->orderBy('date_placed', 'asc')
+                ->orderBy('status', 'DESC')
+                ->orderBy('date_completed', 'ASC')
                 ->paginate(15)
                 ->through(fn ($order) => [
                     'id' => $order->id,
@@ -67,13 +67,15 @@ class OrderController extends Controller
         ]);
 
         $now = Carbon::now();
+        $duration = Category::where('id', $request->category_id)->value('duration');
 
         Order::create([
             'name' => $request->name,
             'category_id' => $request->category_id,
             'weight' => $request->weight,
             'date_placed' => $now,
-            'status' => 'Proses',
+            'date_completed' => Carbon::parse($now)->addHour($duration),
+            'status' => 'In Progress',
             'user_id' => $user->id,
             'branch_id' => $user->branch_id,
         ]);
@@ -117,7 +119,7 @@ class OrderController extends Controller
         $user = Auth::user();
         $order = Order::find($id);
 
-        if ($order->status == "Selesai") {
+        if ($order->status == "Collected") {
             return redirect()->back()->with('error', 'Order completed, order data cannot be changed!');
         }
 
@@ -146,7 +148,7 @@ class OrderController extends Controller
                 'user_id' => $user->id,
             ]);
 
-            $order->status = 'Selesai';
+            $order->status = 'Collected';
             $order->date_completed = $now;
             $order->save();
 

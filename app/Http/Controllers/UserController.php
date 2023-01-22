@@ -104,7 +104,9 @@ class UserController extends Controller
 
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password = bcrypt($request->password);
+        if($request->password != null){
+            $user->password = bcrypt($request->password);
+        }
         $user->branch_id = $request->branch_id;
         $user->save();
 
