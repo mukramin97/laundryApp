@@ -23,7 +23,7 @@ class OrderController extends Controller
         return Inertia::render('Order/Order', [
             'orders' => Order::where('branch_id', $user->branch_id)
                 ->orderBy('status', 'DESC')
-                ->orderBy('date_completed', 'ASC')
+                ->orderBy('date_completed', 'DESC')
                 ->paginate(15)
                 ->through(fn ($order) => [
                     'id' => $order->id,
@@ -153,7 +153,7 @@ class OrderController extends Controller
             $order->save();
 
             return Redirect::route('order.index')->with('success', $request->name . ' order payment successfully!');
-        } else if ($user->id === $order->user_id or $user->is_superadmin == true ) {
+        } else if ($user->id === $order->user_id or $user->is_superadmin == true) {
             $order->name = $request->name;
             $order->category_id = $request->category_id;
             $order->user_id = $user->id;
@@ -197,11 +197,11 @@ class OrderController extends Controller
         $user = Auth::user();
 
         $payment = Payment::findOrFail($id);
+        $order = Order::where('id', $payment->order_id)->first();
+        $order->status = "Completed";
+        $order->save();
         $payment->delete();
 
-        //I need to set order status to proses
-
         return redirect()->back()->with('success', 'Payment order deleted successfully!');
-
     }
 }

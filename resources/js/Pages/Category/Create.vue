@@ -1,5 +1,6 @@
 <template>
   <layout>
+
     <Head title="Create Category" />
     <div class="content-header">
       <div class="container-fluid">
@@ -25,43 +26,39 @@
                 <div class="card-body">
                   <div class="form-group">
                     <label for="exampleCategoryName">Category Name</label>
-                    <input
-                      id="category_name"
-                      v-model="form.category_name"
-                      type="text"
-                      class="form-control"
-                      :class="{ 'is-invalid': categoryNameError }"
-                      placeholder="Category Name"
-                    />
+                    <input id="category_name" v-model="form.category_name" type="text" class="form-control"
+                      :class="{ 'is-invalid': categoryNameError }" placeholder="Category Name" />
                     <span v-if="errors.category_name" class="text-danger">{{
                       errors.category_name
                     }}</span>
                   </div>
                   <div class="form-group">
+                    <label for="exampleDuration">Duration</label>
+                    <div class="form-group input-group">
+                      <input id="duration" v-model="form.duration" type="number" class="form-control"
+                        :class="{ 'is-invalid': durationError }" placeholder="Duration" />
+                      <div class="input-group-append">
+                        <span class="input-group-text">
+                          Hours
+                        </span>
+                      </div>
+                    </div>
+                    <span v-if="errors.duration" class="text-danger">{{
+                      errors.duration
+                    }}</span>
+                  </div>
+                  <div class="form-group">
                     <label for="exampleDescription">Description</label>
-                    <textarea
-                      id="description"
-                      v-model="form.description"
-                      type="text"
-                      class="form-control"
-                      :class="{ 'is-invalid': descriptionError }"
-                      placeholder="Description"
-                    ></textarea>
+                    <textarea id="description" v-model="form.description" type="text" class="form-control"
+                      :class="{ 'is-invalid': descriptionError }" placeholder="Description"></textarea>
                     <span v-if="errors.description" class="text-danger">{{
                       errors.description
                     }}</span>
                   </div>
                   <div class="form-group">
                     <label for="price">Price</label>
-                    <input
-                      id="price"
-                      v-model="form.price"
-                      type="number"
-                      step="0.01"
-                      class="form-control"
-                      :class="{ 'is-invalid': priceError }"
-                      placeholder="Enter price"
-                    />
+                    <input id="price" v-model="form.price" type="number" step="0.01" class="form-control"
+                      :class="{ 'is-invalid': priceError }" placeholder="Enter price" />
                     <span v-if="errors.price" class="text-danger">{{
                       errors.price
                     }}</span>
@@ -101,6 +98,7 @@ export default {
     return {
       form: {
         category_name: null,
+        duration: null,
         description: null,
         price: null,
       },
@@ -118,6 +116,9 @@ export default {
   computed: {
     categoryNameError() {
       return !!this.errors.category_name;
+    },
+    durationError() {
+      return !!this.errors.duration;
     },
     descriptionError() {
       return !!this.errors.description;

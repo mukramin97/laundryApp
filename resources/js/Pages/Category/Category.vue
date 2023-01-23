@@ -38,6 +38,7 @@
                   <thead>
                     <tr>
                       <th>Category Name</th>
+                      <th>Duration</th>
                       <th>Description</th>
                       <th>Price</th>
                     </tr>
@@ -47,6 +48,9 @@
                       class="clickable-row">
                       <td>
                         <span v-text="category.category_name"></span>
+                      </td>
+                      <td>
+                        <span class="text-center" v-text="category.duration + ' Hours' "></span>
                       </td>
                       <td>
                         <span v-text="category.description"></span>

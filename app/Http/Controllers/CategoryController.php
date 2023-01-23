@@ -35,6 +35,10 @@ class CategoryController extends Controller
                 'min:3',
                 'unique:categories,category_name'
             ],
+            'duration' => [
+                'required',
+                'integer'
+            ],
             'description' => [
                 'required',
                 'min:5',
@@ -47,6 +51,7 @@ class CategoryController extends Controller
 
         Category::create([
             'category_name' => $request->category_name,
+            'duration' => $request->duration,
             'description' => $request->description,
             'price' => $request->price,
         ]);
@@ -74,6 +79,10 @@ class CategoryController extends Controller
                 'min:3',
                 Rule::unique('categories')->ignore($category)
             ],
+            'duration' => [
+                'required',
+                'integer'
+            ],
             'description' => [
                 'required',
                 'min:5',
@@ -85,6 +94,7 @@ class CategoryController extends Controller
         ]);
 
         $category->category_name = $request->category_name;
+        $category->duration = $request->duration;
         $category->description = $request->description;
         $category->price = $request->price;
         $category->save();
