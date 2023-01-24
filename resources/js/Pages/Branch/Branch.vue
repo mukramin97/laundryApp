@@ -70,17 +70,6 @@
   </layout>
 </template>
 
-<style>
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-.clickable-row:hover {
-  cursor: pointer;
-}
-</style>
-
 <script>
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import Layout from "../../Shared/Layout.vue";
