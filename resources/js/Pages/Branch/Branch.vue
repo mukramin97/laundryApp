@@ -50,7 +50,7 @@
                         {{ branch.branch_name }}
                       </td>
                       <td>
-                        {{ branch.phone_number }}
+                        +{{ branch.phone_number }}
                       </td>
                       <td>
                         {{ branch.established }}

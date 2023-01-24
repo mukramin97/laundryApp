@@ -1,5 +1,6 @@
 <template>
   <layout>
+
     <Head title="Create Branch" />
     <div class="content-header">
       <div class="container-fluid">
@@ -25,28 +26,23 @@
                 <div class="card-body">
                   <div class="form-group">
                     <label for="exampleBranchName">Branch Name</label>
-                    <input
-                      id="branch_name"
-                      v-model="form.branch_name"
-                      type="text"
-                      class="form-control"
-                      :class="{ 'is-invalid': branchNameError }"
-                      placeholder="Branch Name"
-                    />
+                    <input id="branch_name" v-model="form.branch_name" type="text" class="form-control"
+                      :class="{ 'is-invalid': branchNameError }" placeholder="Branch Name" />
                     <span v-if="errors.branch_name" class="text-danger">{{
                       errors.branch_name
                     }}</span>
                   </div>
                   <div class="form-group">
                     <label for="examplePhoneNumber">Phone Number</label>
-                    <input
-                      id="phone_number"
-                      v-model="form.phone_number"
-                      type="text"
-                      class="form-control"
-                      :class="{ 'is-invalid': phoneNumberError }"
-                      placeholder="Phone Number"
-                    />
+                    <div class="form-group input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          +
+                        </span>
+                      </div>
+                      <input id="phone_number" v-model="form.phone_number" type="text" class="form-control"
+                        :class="{ 'is-invalid': phoneNumberError }" placeholder="Phone Number" />
+                    </div>
                     <span v-if="errors.phone_number" class="text-danger">{{
                       errors.phone_number
                     }}</span>

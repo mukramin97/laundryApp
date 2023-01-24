@@ -39,7 +39,7 @@ class BranchController extends Controller
             ],
             'phone_number' => [
                 'required',
-                'regex:/^([0-9\s\-\+\(\)]*)$/',
+                'regex:/^62\d+$/',
                 'min:10'
             ],
         ]);
@@ -79,7 +79,7 @@ class BranchController extends Controller
             ],
             'phone_number' => [
                 'required',
-                'regex:/^([0-9\s\-\+\(\)]*)$/',
+                'regex:/^62\d+$/',
                 'min:10'
             ],
         ]);

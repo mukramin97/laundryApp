@@ -28,7 +28,7 @@ class BranchSeeder extends Seeder
     		DB::table('branchs')->insert([
 
                 'branch_name' => $faker->company,
-                'phone_number' => $faker->phoneNumber,
+                'phone_number' => $faker->numerify('628#########'),
                 'established' => $dateOnly,
 
     		]);

@@ -34,8 +34,15 @@
                   </div>
                   <div class="form-group">
                     <label for="examplePhoneNumber">Phone Number</label>
-                    <input id="phone_number" v-model="form.phone_number" type="text" class="form-control"
-                      :class="{ 'is-invalid': phoneNumberError }" placeholder="Phone Number" />
+                    <div class="form-group input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          +
+                        </span>
+                      </div>
+                      <input id="phone_number" v-model="form.phone_number" type="text" class="form-control"
+                        :class="{ 'is-invalid': phoneNumberError }" placeholder="Phone Number" />
+                    </div>
                     <span v-if="errors.phone_number" class="text-danger">{{
                       errors.phone_number
                     }}</span>
