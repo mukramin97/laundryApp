@@ -79,40 +79,40 @@
               <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
-
-          <div class="col-lg-1">
-            <div class="small-box bg-danger">
+          <div class="col-lg-2 col-6">
+            <div class="small-box bg-info">
               <div class="inner">
-                <h3>65</h3>
-                <p>Employee</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-person-add"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <div class="col-lg-1 col-6">
-            <div class="small-box bg-danger">
-              <div class="inner">
-                <div class="form-group">
-                  <label for="month">Filter Month</label>
-                  <select class="form-control" id="month" v-model="selectedMonth" @change="fetchData">
-                    <option value="1">January</option>
-                    <option value="2">February</option>
-                    <option value="3">March</option>
-                    <option value="4">April</option>
-                    <option value="5">May</option>
-                    <option value="6">June</option>
-                    <option value="7">July</option>
-                    <option value="8">August</option>
-                    <option value="9">September</option>
-                    <option value="10">October</option>
-                    <option value="11">November</option>
-                    <option value="12">December</option>
-                  </select>
+                <h6>Filter</h6>
+                <div class="row">
+                  <div class="col-5">
+                    <div class="form-group">
+                      <select class="form-control" id="year" v-model="selectedYear" @change="fetchData">
+                        <option value=2021>2021</option>
+                        <option value=2022>2022</option>
+                        <option value=2023>2023</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-7">
+                    <div class="form-group">
+                      <select class="form-control" id="month" v-model="selectedMonth" @change="fetchData">
+                        <option value=1>January</option>
+                        <option value=2>February</option>
+                        <option value=3>March</option>
+                        <option value=4>April</option>
+                        <option value=5>May</option>
+                        <option value=6>June</option>
+                        <option value=7>July</option>
+                        <option value=8>August</option>
+                        <option value=9>September</option>
+                        <option value=10>October</option>
+                        <option value=11>November</option>
+                        <option value=12>December</option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
-
+                
               </div>
               <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
@@ -142,26 +142,35 @@ export default {
     totalGross: Number,
     totalPayment: Number,
     estimatedActual: Number,
-    s_month: String,
+    s_month: Number,
+    s_year: Number,
   },
   data: () => ({
     selectedMonth: null,
+    selectedYear: null,
     data: {}
   }),
   watch: {
     selectedMonth() {
       // send http request to get data based on selected month
       // update your component data
+    },
+    selectedYear() {
+      // send http request to get data based on selected month
+      // update your component data
     }
   },
   methods: {
     fetchData() {
-      this.$inertia.visit(`/?month=${this.selectedMonth}`)
+      this.$inertia.visit(`/?month=${this.selectedMonth}&year=${this.selectedYear}`)
     }
   },
   created() {
     if (this.$props.s_month) {
       this.selectedMonth = this.$props.s_month;
+    }
+    if (this.$props.s_year) {
+      this.selectedYear = this.$props.s_year;
     }
   }
 };

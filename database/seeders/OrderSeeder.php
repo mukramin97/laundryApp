@@ -18,13 +18,13 @@ class OrderSeeder extends Seeder
     {
         $faker = Faker::create('id_ID');
 
-        for ($i = 1; $i <= 300; $i++) {
+        for ($i = 1; $i <= 2000; $i++) {
 
             //Adding random category_id and used it to add to date_completed based on category duration
             $category_id = $faker->numberBetween(1, 4);
             $duration = DB::table('categories')->where('id', $category_id)->value('duration');
 
-            $dateThisMonth = $faker->dateTimeBetween($startDate = '-1 month', $endDate = 'now');
+            $dateThisMonth = $faker->dateTimeBetween($startDate = '-12 month', $endDate = 'now');
             $dateCompleted = Carbon::parse($dateThisMonth)->addHour($duration);
 
             //Adding random branch_id and used it to get random user_id based on their each branch
