@@ -21,7 +21,9 @@ class OrderController extends Controller
         $user = Auth::user();
 
         return Inertia::render('Order/Order', [
-            'orders' => Order::where('branch_id', $user->branch_id)
+            'orders' => Order::with(['category' => function ($query) {
+                $query->withTrashed();
+            }])->where('branch_id', $user->branch_id)
                 ->orderBy('status', 'DESC')
                 ->orderBy('date_completed', 'DESC')
                 ->paginate(15)
@@ -87,7 +89,9 @@ class OrderController extends Controller
     {
         $order = Order::with(['user' => function ($query) {
             $query->withTrashed();
-        }])->with('category')->where('id', $id)->first();
+        }])->with(['category' => function ($query) {
+            $query->withTrashed();
+        }])->where('id', $id)->first();
         $categories = Category::all();
 
         $paymentData = Payment::where('order_id', $order->id)->with(['user' => function ($query) {

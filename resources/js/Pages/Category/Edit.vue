@@ -57,8 +57,13 @@
                   </div>
                   <div class="form-group">
                     <label for="price">Price</label>
-                    <input id="price" v-model="form.price" type="number" step="0.01" class="form-control"
-                      :class="{ 'is-invalid': priceError }" placeholder="Enter price" />
+                    <div class="form-group input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Rp.</span>
+                      </div>
+                      <input id="price" v-model="form.price" type="number" class="form-control"
+                        :class="{ 'is-invalid': priceError }" placeholder="Enter price" />
+                    </div>
                     <span v-if="errors.price" class="text-danger">{{
                       errors.price
                     }}</span>
@@ -67,7 +72,11 @@
 
                 <div class="card-footer">
                   <div class="row">
-                    <div class="col-md-6"></div>
+                    <div class="col-md-6">
+                      <button type="button" class="btn text-red" @click="deleteCategory">
+                        Delete Category
+                      </button>
+                    </div>
                     <div class="col-md-6 text-right">
                       <button type="submit" class="btn btn-primary">
                         Submit
@@ -112,6 +121,9 @@ export default {
   methods: {
     update() {
       this.$inertia.put("/category/" + this.category.id, this.form);
+    },
+    deleteCategory() {
+      this.swalConfirm(() => this.$inertia.delete("/category/" + this.category.id));
     },
   },
   computed: {

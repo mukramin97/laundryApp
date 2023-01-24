@@ -64,6 +64,8 @@ Route::get('category/{id}/edit', [CategoryController::class, 'edit'])
     ->name('category.edit')->middleware('is_superadmin');
 Route::put('category/{id}', [CategoryController::class, 'update'])
     ->name('category.update')->middleware('is_superadmin');
+Route::delete('category/{id}', [CategoryController::class, 'destroy'])
+    ->name('category.destroy')->middleware('is_superadmin');
 
 Route::get('order', [OrderController::class, 'index'])
     ->name('order.index')->middleware('auth');

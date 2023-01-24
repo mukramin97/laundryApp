@@ -57,8 +57,13 @@
                   </div>
                   <div class="form-group">
                     <label for="price">Price</label>
-                    <input id="price" v-model="form.price" type="number" step="0.01" class="form-control"
-                      :class="{ 'is-invalid': priceError }" placeholder="Enter price" />
+                    <div class="form-group input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Rp.</span>
+                      </div>
+                      <input id="price" v-model="form.price" type="number" class="form-control"
+                        :class="{ 'is-invalid': priceError }" placeholder="Enter price" />
+                    </div>
                     <span v-if="errors.price" class="text-danger">{{
                       errors.price
                     }}</span>
