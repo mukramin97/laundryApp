@@ -56,7 +56,7 @@
                                             <div class="form-group">
                                                 <label for="exampleWeight">Weight</label>
                                                 <div class="form-group input-group">
-                                                    <input id="weight" v-model="form.weight" type="float"
+                                                    <input id="weight" v-model="form.weight" type="number" step="0.1"
                                                         class="form-control" :class="{ 'is-invalid': weightError }"
                                                         placeholder="Weight" />
                                                     <div class="input-group-append">
@@ -71,7 +71,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleDatePlaced">Date Placed</label>
-                                                <input id="datePlaced" v-model="form.date_placed" type="datetime"
+                                                <input id="datePlaced" :value="formatDate(form.date_placed)" type="datetime"
                                                     class="form-control" placeholder="DatePlaced" disabled />
                                                 <span v-if="errors.date_placed" class="text-danger">
                                                     {{ errors.date_placed }}
@@ -288,7 +288,7 @@ export default {
             })
         },
         formatDate(date) {
-            return moment(date).format('DD/MM HH:mm')
+            return moment(date).format('dddd, DD MMM [at] HH:mm')
         },
         async copyValue() {
             try {

@@ -31,7 +31,7 @@ class OrderSeeder extends Seeder
             $branch_id = $faker->numberBetween(1, 5);
             $user_id = DB::table('users')->where('branch_id', $branch_id)->pluck('id');
 
-            $status = $faker->randomElement(['In Progress', 'Completed', 'Collected']);
+            $status = $faker->randomElement(['In Progress', 'Completed', 'Completed']);
 
             $order_id = DB::table('orders')->insertGetId([
                 'name' => $faker->firstName(),
@@ -45,7 +45,7 @@ class OrderSeeder extends Seeder
                 'date_completed' => $dateCompleted,
             ]);
 
-            if ($status == 'Collected') {
+            if ($status == 'Completed') {
                 DB::table('payments')->insert([
                     'cost' => $faker->randomNumber(5, true),
                     'amount_paid' => $faker->randomNumber(5, true),

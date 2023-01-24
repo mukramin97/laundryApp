@@ -25,7 +25,7 @@ class OrderController extends Controller
                 $query->withTrashed();
             }])->where('branch_id', $user->branch_id)
                 ->orderBy('status', 'DESC')
-                ->orderBy('date_completed', 'DESC')
+                ->orderBy('date_completed', 'ASC')
                 ->paginate(15)
                 ->through(fn ($order) => [
                     'id' => $order->id,

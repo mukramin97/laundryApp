@@ -131,7 +131,7 @@ export default {
         return ""
       }
       else {
-        return moment(date).format('DD/MM HH:mm')
+        return moment(date).format('dddd, DD MMM [at] HH:mm')
       }
     },
     getCost(weight, price) {

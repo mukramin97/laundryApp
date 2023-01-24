@@ -48,9 +48,15 @@
                   </div>
                   <div class="form-group">
                     <label for="exampleWeight">Weight</label>
-                    <input id="weight" v-model="form.weight" type="text" class="form-control"
-                      :class="{ 'is-invalid': weightError }" placeholder="Weight" />
-                      
+                    <div class="form-group input-group">
+                      <input id="weight" v-model="form.weight" type="number" step="0.1" class="form-control"
+                        :class="{ 'is-invalid': weightError }" placeholder="Weight" />
+                      <div class="input-group-append">
+                        <span class="input-group-text">
+                          <i class="fas fa-weight-hanging"></i>
+                        </span>
+                      </div>
+                    </div>
                     <span v-if="errors.weight" class="text-danger">
                       {{ errors.weight }}
                     </span>
